@@ -1,0 +1,16 @@
+webserver:
+  build: .
+  dockerfile: Dockerfile-webserver
+  ports:
+    - "8000:80"
+  links:
+    - appserver:node
+
+appserver:
+  build: .
+  dockerfile: Dockerfile-nodejs
+  ports:
+    - "3000"
+  volumes:
+    - "./app:/app"
+  command: pm2 --no-daemon start /app/ecosystem.json

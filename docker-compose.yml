@@ -14,3 +14,9 @@ appserver:
   volumes:
     - "./app:/app"
   command: pm2 --no-daemon start /app/ecosystem.json
+
+botserver:
+  build: .
+  dockerfile: Dockerfile-hubot
+  ports:
+    - "4000"

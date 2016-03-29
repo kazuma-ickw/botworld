@@ -5,6 +5,7 @@ webserver:
     - "8000:80"
   links:
     - appserver:node
+    - botserver:bot
 
 appserver:
   build: .
@@ -18,5 +19,8 @@ appserver:
 botserver:
   build: .
   dockerfile: Dockerfile-hubot
+  volumes:
+    - "./bot:/bot"
   ports:
     - "4000"
+  command: pm2 --no-daemon start /bot/ecosystem.json

@@ -2,7 +2,7 @@ FROM centos:centos7
 
 RUN echo install
 RUN yum -y groupinstall "Development Tools"
-RUN yum -y install epel-release which vim
+RUN yum -y install epel-release which vim expect
 RUN yum -y install nodejs npm --enablerepo=epel
 RUN node -v
 RUN npm -v
@@ -12,8 +12,9 @@ RUN node -v
 RUN npm -v
 RUN npm install -g pm2 yo generator-hubot
 
-WORKDIR /hubot/bot
-RUN chmod 777 /root
-RUN pwd
-RUN yo hubot
-CMD echo test
+RUN useradd -m bot
+RUN mkdir /bot
+RUN chmod 777 /bot
+USER bot
+WORKDIR /bot
+CMD tail -f /dev/null
